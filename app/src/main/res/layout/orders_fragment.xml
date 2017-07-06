@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sky">
+
+
+    <EditText
+        android:id="@+id/et_number"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Enter your number here"
+        style="@style/tv_style"
+        android:background="@null"
+       />
+
+    <Button
+        android:id="@+id/bt_trackOrder"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Track orders"
+        android:background="@drawable/sky"
+        android:textStyle="bold"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerViewOrders"
+        android:layout_height="wrap_content" />
+</LinearLayout>
