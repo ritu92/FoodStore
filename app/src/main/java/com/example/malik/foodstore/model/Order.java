@@ -4,7 +4,7 @@ package com.example.malik.foodstore.model;
  * Created by malik on 7/5/2017.
  */
 
-public class OrderList {
+public class Order {
     String orderId;
     String orderName;
     String orderQuantity;
@@ -29,7 +29,7 @@ public class OrderList {
     public String getOrderStatus() {
         return orderStatus;
     }
-    public OrderList(String orderId, String orderName, String orderQuantity, String orderPrice, String orderStatus){
+    public Order(String orderId, String orderName, String orderQuantity, String orderPrice, String orderStatus){
         this.orderId = orderId;
         this.orderName = orderName;
         this.orderQuantity = orderQuantity;

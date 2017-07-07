@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.malik.foodstore.R;
-import com.example.malik.foodstore.adapters.OrderTrackAdapter;
-import com.example.malik.foodstore.model.OrderList;
+import com.example.malik.foodstore.adapters.TrackOrderAdapter;
+import com.example.malik.foodstore.model.Order;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +31,8 @@ import java.util.List;
 
 /**
  * Created by malik on 7/4/2017.
+ * orders default display fragment that has an edit text view where you can enter
+ * phone number whose orders you want to track
  */
 
 public class OrdersFragment extends Fragment {
@@ -41,7 +43,7 @@ public class OrdersFragment extends Fragment {
     private String url = "http://rjtmobile.com/ansari/fos/fosapp/order_recent.php?&user_phone=";
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<OrderList> orderList;
+    List<Order> order;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.orders_fragment,container,false);
@@ -52,7 +54,7 @@ public class OrdersFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         //custom layout for recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        orderList = new ArrayList<>();
+        order = new ArrayList<>();
         bt_trackOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +82,17 @@ public class OrdersFragment extends Fragment {
                     JSONArray categories = jsonObject.getJSONArray("Order Detail");
                     for (int i = 0; i < categories.length(); i++) {
                         JSONObject item = categories.getJSONObject(i);
-                        OrderList ls = new OrderList(item.getString("OrderId"), item.getString("OrderName"),
+                        Order ls = new Order(item.getString("OrderId"), item.getString("OrderName"),
                                 item.getString("OrderQuantity"),item.getString("TotalOrder"),item.getString("OrderStatus") );
-                        orderList.add(ls);
+                        order.add(ls);
                     }
 
-                    adapter = new OrderTrackAdapter(orderList,getActivity().getApplicationContext());
+                    adapter = new TrackOrderAdapter(order,getActivity().getApplicationContext(), new TrackOrderAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Order item) {
+                            Toast.makeText(getActivity(), "Order  status: Packing", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

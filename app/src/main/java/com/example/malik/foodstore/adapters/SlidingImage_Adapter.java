@@ -22,24 +22,33 @@ public class SlidingImage_Adapter extends PagerAdapter {
     private ArrayList<Integer> IMAGES;
     private LayoutInflater layoutInflater;
     private Context context;
-
+    /**
+     * parameterized constructor
+     */
     public SlidingImage_Adapter(Context context,ArrayList<Integer> IMAGES)
     {
         this.context = context;
         this.IMAGES=IMAGES;
         layoutInflater = LayoutInflater.from(context);
     }
-
+    /**
+     * removes the current picture in order to create space for a new one
+     */
     @Override
     public void destroyItem(ViewGroup container, int position,Object object)
     {
         container.removeView((View) object);
     }
+    /**
+     * gets the size of array to define how many images will be displayed
+     */
     @Override
     public int getCount() {
         return IMAGES.size();
     }
-
+    /**
+     * inflates the image in the view
+     */
     @Override
     public Object instantiateItem(ViewGroup view, int position)
     {
@@ -54,18 +63,24 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
             return imageLayout;
     }
-
+    /**
+     * checks if picture is populating the view with correct object
+     */
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view.equals(object);
     }
-
+    /**
+     * could restore state if we had a saved state, does nothing here
+     */
     @Override
     public void restoreState(Parcelable state, ClassLoader loader)
     {
 
     }
-
+    /**
+     * could save state if we needed it later,  no requirement here so returns null
+     */
     @Override
     public Parcelable saveState()
     {

@@ -10,6 +10,7 @@ import com.example.malik.foodstore.R;
 
 /**
  * Created by malik on 7/4/2017.
+ * by default view for cart fragment
  */
 
 public class CartFragment extends Fragment {

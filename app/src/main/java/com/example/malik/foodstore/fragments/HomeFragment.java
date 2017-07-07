@@ -3,11 +3,8 @@ package com.example.malik.foodstore.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.malik.foodstore.R;
 import com.example.malik.foodstore.adapters.FoodItemAdapter;
 import com.example.malik.foodstore.adapters.SlidingImage_Adapter;
-import com.example.malik.foodstore.model.FoodItems;
+import com.example.malik.foodstore.model.FoodItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +41,7 @@ import java.util.TimerTask;
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<FoodItems> foodItems ;
+    List<FoodItem> foodItems ;
     ProgressDialog progressDialog;
     private static final String TAG = HomeFragment.class.getSimpleName();
     private String url = "http://rjtmobile.com/ansari/fos/fosapp/fos_food_loc.php?city=delhi";
@@ -91,7 +88,9 @@ public class HomeFragment extends Fragment {
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
 
-
+            /**
+             * runs the next item image display
+             */
             public void run() {
                 if (currentPage == NUM_PAGES) {
                     currentPage = 0;
@@ -100,6 +99,9 @@ public class HomeFragment extends Fragment {
             }
 
         };
+        /**
+         * how long one image will be displayed
+         */
         Timer swipeTimer = new Timer();
         swipeTimer.schedule(new TimerTask() {
 
@@ -110,7 +112,9 @@ public class HomeFragment extends Fragment {
             }
 
         }, 3000, 3000);
-
+/**
+ * to enable manual scrolling of pictures
+ */
         // Pager listener over indicator
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -159,15 +163,15 @@ public class HomeFragment extends Fragment {
                     JSONArray categories = jsonObject.getJSONArray("Food");
                     for (int i = 0; i < categories.length(); i++) {
                         JSONObject item = categories.getJSONObject(i);
-                        FoodItems ls = new FoodItems(item.getString("FoodName"), item.getString("FoodPrice"),
+                        FoodItem ls = new FoodItem(item.getString("FoodName"), item.getString("FoodPrice"),
                                 item.getString("FoodCategory"),item.getString("FoodThumb") );
                         foodItems.add(ls);
                     }
 
                     adapter = new FoodItemAdapter(foodItems,getActivity().getApplicationContext(), new FoodItemAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(FoodItems item) {
-                            Toast.makeText(getActivity(), item+"", Toast.LENGTH_LONG).show();
+                        public void onItemClick(FoodItem item) {
+                            Toast.makeText(getActivity(), "Go to search bar to order", Toast.LENGTH_LONG).show();
                         }
                     });
 

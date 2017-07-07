@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/sky">
+    android:layout_height="match_parent">
 
 
     <EditText
@@ -21,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Track orders"
-        android:background="@drawable/sky"
+        android:background="@color/primary_light"
         android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView

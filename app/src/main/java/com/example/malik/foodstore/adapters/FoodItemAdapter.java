@@ -6,10 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.malik.foodstore.R;
-import com.example.malik.foodstore.model.FoodItems;
+import com.example.malik.foodstore.model.FoodItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,14 +20,14 @@ import java.util.List;
  * adapter to populate home screen with food items
  */
 
-public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHolder>  {
-    List<FoodItems> foodItems;
+public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHolder> {
+    List<FoodItem> foodItems;
     private Context context;
     private final OnItemClickListener listener;
     /**
      * parameterized constructor
      */
-    public FoodItemAdapter(List<FoodItems> foodItems, Context context, OnItemClickListener listener) {
+    public FoodItemAdapter(List<FoodItem> foodItems, Context context, OnItemClickListener listener) {
     this.foodItems = foodItems;
         this.context = context;
         this.listener = listener;
@@ -35,7 +36,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
      * enables click in an item
      */
     public interface OnItemClickListener {
-        void onItemClick(FoodItems item);
+        void onItemClick(FoodItem item);
     }
     /**
      * displays items view for a singular card view attached to adapter
@@ -53,12 +54,12 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        FoodItems foodItemsList = foodItems.get(position);
-        holder.tv_foodName.setText(foodItemsList.getFood_name());
-        holder.tv_foodCategory.setText("Category: "+foodItemsList.getFood_category());
-        holder.tv_foodPrice.setText("Price: "+foodItemsList.getFood_price());
+        FoodItem foodItemList = foodItems.get(position);
+        holder.tv_foodName.setText(foodItemList.getFood_name());
+        holder.tv_foodCategory.setText("Category: "+ foodItemList.getFood_category());
+        holder.tv_foodPrice.setText("Price: "+ foodItemList.getFood_price());
         Picasso.with(context)
-                .load(foodItemsList.getFood_img())
+                .load(foodItemList.getFood_img())
                 .resize(300,400)
                 .into(holder.iv_foodImg);
         holder.bind(foodItems.get(position), listener);
@@ -89,11 +90,11 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
         /**
          * on click listener for a single card
          */
-        public void bind(final FoodItems foodItems, final OnItemClickListener listener) {
+        public void bind(final FoodItem foodItem, final OnItemClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(foodItems);
+                    listener.onItemClick(foodItem);
                 }
             });
         }
