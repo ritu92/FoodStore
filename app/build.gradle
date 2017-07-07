@@ -25,28 +25,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
 
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'me.relex:circleindicator:1.2.2@aar'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.volley:volley:1.0.0'
 
     // AppCompat Libs
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    
 
-    // GSON with Retrofit
-    /*compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.google.code.gson:gson:1.7.2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'*/
-    compile 'com.github.traex.expandablelayout:library:1.2.2'
 
-    testCompile 'junit:junit:4.12'
+
 
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -54,4 +38,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'me.relex:circleindicator:1.2.2@aar'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.github.traex.expandablelayout:library:1.2.2'
+    compile 'com.google.android.gms:play-services-maps:11.0.2'
+    testCompile 'junit:junit:4.12'
 }
