@@ -60,7 +60,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
         holder.tv_foodPrice.setText("Price: "+ foodItemList.getFood_price());
         Picasso.with(context)
                 .load(foodItemList.getFood_img())
-                .resize(300,400)
+                .resize(500,400)
                 .into(holder.iv_foodImg);
         holder.bind(foodItems.get(position), listener);
     }

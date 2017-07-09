@@ -51,5 +51,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.github.traex.expandablelayout:library:1.2.2'
     compile 'com.google.android.gms:play-services-maps:11.0.2'
+    compile 'com.google.android.gms:play-services-location:11.0.2'
+    compile 'com.google.android.gms:play-services-wallet:11.0.2'
+    compile 'com.google.android.gms:play-services:11.0.2'
     testCompile 'junit:junit:4.12'
 }

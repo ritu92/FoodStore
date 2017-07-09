@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -107,16 +108,16 @@ public class SearchFragment extends Fragment {
         foodItem = new ArrayList<>();
 
         parentView = view.findViewById(R.id.parentLayoutSearch);
-
-       /* *
+         /* *
          * Getting List and Setting List Adapter
          */
         recyclerViewSearch = (RecyclerView) view.findViewById(R.id.recyclerViewSearch);
         recyclerViewSearch.setHasFixedSize(true);
-        recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerViewSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+      /*
         button = (Button) view.findViewById(R.id.button);
-/*        button.setOnClickListener(new View.OnClickListener() {
+       button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -190,6 +191,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void myloadRecylerView() {
+
+        recyclerViewSearch.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
+
         url_final = url+url_end;
 
         StringRequest sr = new StringRequest(Request.Method.GET, url_final, new com.android.volley.Response.Listener<String>() {
