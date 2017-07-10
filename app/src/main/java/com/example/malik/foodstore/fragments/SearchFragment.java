@@ -1,6 +1,7 @@
 package com.example.malik.foodstore.fragments;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -216,7 +217,14 @@ public class SearchFragment extends Fragment {
                     rv_adapter = new FoodItemAdapter(foodItem,getActivity().getApplicationContext(), new FoodItemAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(FoodItem item) {
-                            Toast.makeText(getActivity(), "Place order", Toast.LENGTH_LONG).show();
+                            SharedPreferences pref2 = getActivity().getApplicationContext().getSharedPreferences("MyPrefCart",0);
+                            SharedPreferences.Editor editor = pref2.edit();
+                            editor.putString("name", item.getFood_name());
+                            editor.putString("price", item.getFood_price());
+                            editor.commit();
+                            Snackbar.make(parentView, "Item added to cart", Snackbar.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_LONG).show();
+                            Log.i("Ritu", item.getFood_name()+item.getFood_price());
                         }
                     });
 

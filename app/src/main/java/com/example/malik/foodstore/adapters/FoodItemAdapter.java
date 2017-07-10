@@ -78,7 +78,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
         TextView tv_foodName, tv_foodCategory, tv_foodPrice;
         ImageView iv_foodImg;
         /**
-         * ,ethod that assigns values to views by finding them in the layout
+         * method that assigns values to views by finding them in the layout
          */
         public ViewHolder(View itemView) {
             super(itemView);

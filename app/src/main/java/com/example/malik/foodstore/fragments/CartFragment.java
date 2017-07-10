@@ -3,18 +3,25 @@ package com.example.malik.foodstore.fragments;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +33,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.malik.foodstore.FragmentChangeListener;
 import com.example.malik.foodstore.R;
 import com.example.malik.foodstore.activities.MapsActivity;
+import com.example.malik.foodstore.adapters.CartAdapter;
+import com.example.malik.foodstore.model.CartList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,6 +59,7 @@ import com.google.android.gms.wallet.fragment.WalletFragmentOptions;
 import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -69,14 +79,38 @@ public class CartFragment extends Fragment implements
     private FullWallet mFullWallet;
     Button bt_location,  buttonCash, bt_Confirm;
     EditText et_Address;
+    String address;
+    RecyclerView recyclerViewCart;
+    RecyclerView.Adapter adapter;
+    ArrayList<CartList> ar = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
-       bt_location = (Button)view.findViewById(R.id.bt_location);
+        bt_location = (Button)view.findViewById(R.id.bt_location);
         buttonCash = (Button)view.findViewById(R.id.buttonCash);
         bt_Confirm = (Button)view.findViewById(R.id.bt_Confirm);
         et_Address =(EditText) view.findViewById(R.id.et_Address);
+        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
+        address = pref.getString("address",null);
+        SharedPreferences pref2 = getActivity().getApplicationContext().getSharedPreferences("MyPrefCart", 0);
+
+        String price = pref2.getString("price",null);
+        String name = pref2.getString("name", null);
+        recyclerViewCart = (RecyclerView) view.findViewById(R.id.recyclerViewCart);
+        CartList pl = new CartList(name,price);
+        Log.i("Ritu", name+price);
+        ar.add(pl);
+
+        adapter = new CartAdapter(ar, getActivity().getApplicationContext());
+        recyclerViewCart.setAdapter(adapter);
+        et_Address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Ritu", address);
+                et_Address.setText(address);
+            }
+        });
 
         bt_location.setOnClickListener(new View.OnClickListener() {
             @Override

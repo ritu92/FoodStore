@@ -3,14 +3,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerViewCart"/>
+
     <EditText
         android:id="@+id/et_Address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Set delivery address"
-        />
+        android:hint="Set delivery address"
+        android:clickable="true"/>
 
     <Button
         android:id="@+id/bt_location"
