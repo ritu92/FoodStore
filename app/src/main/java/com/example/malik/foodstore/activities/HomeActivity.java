@@ -14,11 +14,23 @@ import com.example.malik.foodstore.R;
 import com.example.malik.foodstore.fragments.SearchFragment;
 import com.example.malik.foodstore.fragments.CartFragment;
 
+/**
+ * Home activity to display 4 basic fragments (Home, Search, Cart, Track Orders) in the gragment view that the activity holds
+ * @see FragmentTabHost
+ * @see HomeFragment
+ * @see CartFragment
+ * @see SearchFragment
+ * @see OrdersFragment
+ */
+
 public class HomeActivity extends FragmentActivity implements FragmentChangeListener{
     //String TAG = getApplicationContext().toString();
     FragmentTabHost fragmentTabHost;
     /**
-     * Home activity that displays 4 tabs, home, search, orders and cart using fragment tab host
+     *view that displays 4 tabs, home, search, orders and cart using fragment tab host
+     *Called when the activity is first created.
+
+     * @param savedInstanceState original instance to create initial view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,12 @@ public class HomeActivity extends FragmentActivity implements FragmentChangeList
 
 
     }
+
+    /**
+     * Interface function overriden, to do fragment replacement throught various activities
+     * @param fragment the input fragment we want to replace the current frame layout with
+     * @see Fragment
+     */
     @Override
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

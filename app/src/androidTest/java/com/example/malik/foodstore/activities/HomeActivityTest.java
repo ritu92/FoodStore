@@ -41,80 +41,14 @@ public class HomeActivityTest {
                 allOf(withId(R.id.pagerHome), isDisplayed()));
         viewPager.perform(swipeLeft());
 
-        ViewInteraction viewPager2 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager2.perform(swipeLeft());
 
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerViewHome), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction viewPager3 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager3.perform(swipeLeft());
-
-        ViewInteraction viewPager4 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager4.perform(swipeLeft());
-
         ViewInteraction recyclerView2 = onView(
                 allOf(withId(R.id.recyclerViewHome), isDisplayed()));
         recyclerView2.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction viewPager5 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager5.perform(swipeRight());
-
-        ViewInteraction textView = onView(
-                allOf(withId(android.R.id.title), isDisplayed()));
-       // textView.perform(click());
-
-        ViewInteraction viewPager6 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager6.perform(swipeLeft());
-
-        ViewInteraction viewPager7 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager7.perform(swipeLeft());
-
-        ViewInteraction viewPager8 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager8.perform(swipeRight());
-
-        ViewInteraction viewPager9 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager9.perform(swipeRight());
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.bt_trackOrder),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.realtabcontent),
-                                        0),
-                                1),
-                        isDisplayed()));
-//        button.check(matches(isDisplayed()));
-
-        ViewInteraction viewPager10 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager10.perform(swipeLeft());
-
-        ViewInteraction viewPager11 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager11.perform(swipeLeft());
-
-        ViewInteraction viewPager12 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager12.perform(swipeRight());
-
-        ViewInteraction viewPager13 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager13.perform(swipeRight());
-
-        ViewInteraction viewPager14 = onView(
-                allOf(withId(R.id.pagerHome), isDisplayed()));
-        viewPager14.perform(swipeLeft());
-
     }
 
     private static Matcher<View> childAtPosition(

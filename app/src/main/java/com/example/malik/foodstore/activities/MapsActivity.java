@@ -46,21 +46,29 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @see LatLng
+ * @see Location
+ * @see Marker
+ * This is the activity that shows us google maps on the screen
+ * There is a custom button added to the top of the frame to perform desired functionality
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, FragmentChangeListener {
-    MarkerOptions markerOptions;
-    Location myLocation;
     Button buttonBack;
     public String selectedLocAddress;
     public String addn;
-    private GoogleMap myMap;
     LatLng current;
-    LatLng tmpLatLng;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     Location mLastLocation;
     Marker mCurrLocationMarker;
 
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState the instance state to create original view
+     * Displays maps and a button
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,10 +97,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * we just add a marker near current location.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
+     * @param googleMap displays selected google maps location along with the map
+     * @see GoogleMap
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -120,6 +130,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 16.0f));
     }
 
+    /**
+     * @see GoogleApiClient
+     * build GoogleApi for use in the activity
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -129,6 +143,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGoogleApiClient.connect();
     }
 
+    /**
+     *  function that detects location change and sets marker to new position if there's a change
+     *  in location of user
+     * @param location sets location to desired parameter for use in other functions
+     *  @see LatLng
+     *
+     */
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
