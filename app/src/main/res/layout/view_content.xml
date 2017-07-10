@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bangaloreButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="Bangalore"
+        android:textColor="@android:color/black"
+        android:background="@color/default_circle_indicator_stroke_color"/>
+
+    <Button
+        android:layout_below="@+id/bangaloreButton"
+        android:id="@+id/delhiButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:background="@color/default_circle_indicator_stroke_color"
+        android:text="Delhi"/>
+
+</RelativeLayout>

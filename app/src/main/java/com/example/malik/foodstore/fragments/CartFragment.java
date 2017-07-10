@@ -78,8 +78,8 @@ public class CartFragment extends Fragment implements
     public static final int FULL_WALLET_REQUEST_CODE = 889;
     private FullWallet mFullWallet;
     Button bt_location,  buttonCash, bt_Confirm;
-    EditText et_Address;
-    String address;
+    EditText et_Address, editText;
+    String address, name, price;
     RecyclerView recyclerViewCart;
     RecyclerView.Adapter adapter;
     ArrayList<CartList> ar = new ArrayList<>();
@@ -87,6 +87,7 @@ public class CartFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
+        editText = (EditText) view.findViewById(R.id.editText);
         bt_location = (Button)view.findViewById(R.id.bt_location);
         buttonCash = (Button)view.findViewById(R.id.buttonCash);
         bt_Confirm = (Button)view.findViewById(R.id.bt_Confirm);
@@ -95,11 +96,12 @@ public class CartFragment extends Fragment implements
         address = pref.getString("address",null);
         SharedPreferences pref2 = getActivity().getApplicationContext().getSharedPreferences("MyPrefCart", 0);
 
-        String price = pref2.getString("price",null);
-        String name = pref2.getString("name", null);
+        price = pref2.getString("price",null);
+        name = pref2.getString("name", null);
+        editText.setText(name +"  "+price);
         recyclerViewCart = (RecyclerView) view.findViewById(R.id.recyclerViewCart);
-        CartList pl = new CartList(name,price);
-        Log.i("Ritu", name+price);
+        CartList pl = new CartList(name, price);
+        Log.i("Ritu2", pl.toString()+"cart"+name+price);
         ar.add(pl);
 
         adapter = new CartAdapter(ar, getActivity().getApplicationContext());
@@ -133,7 +135,7 @@ public class CartFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 Log.i("Ritu", formattedDate);
-                String ORDER_URL = "http://rjtmobile.com/ansari/fos/fosapp/order_request.php?&order_category=veg&order_name=Biryani&order_quantity=2&total_order=700&order_delivery_add=noida&order_date="+formattedDate+"&user_phone=55565454";
+                String ORDER_URL = "http://rjtmobile.com/ansari/fos/fosapp/order_request.php?&order_category=veg&order_name="+name+"&order_quantity=1&total_order="+price+"&order_delivery_add=noida&order_date="+formattedDate+"&user_phone=12345";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, ORDER_URL,
                         new Response.Listener<String>() {
                             @Override

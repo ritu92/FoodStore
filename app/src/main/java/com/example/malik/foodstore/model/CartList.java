@@ -18,6 +18,7 @@ public class CartList {
     public CartList(String cart_name, String cart_price){
         this.cart_name = cart_name;
         this.cart_price = cart_price;
+
     }
 
 }
