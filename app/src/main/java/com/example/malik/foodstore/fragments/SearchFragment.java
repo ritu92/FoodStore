@@ -1,36 +1,26 @@
 package com.example.malik.foodstore.fragments;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.andexert.expandablelayout.library.ExpandableLayoutListView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.malik.foodstore.ApiService;
 import com.example.malik.foodstore.R;
-import com.example.malik.foodstore.RetrofitClient;
 import com.example.malik.foodstore.adapters.FoodItemAdapter;
 import com.example.malik.foodstore.model.FoodItem;
-import com.example.malik.foodstore.model.FoodItemList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,13 +28,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 /**
  * Created by malik on 7/4/2017.
+ * Fragment that enables you to search food items by city or category
+ * shows the search using expandable layout awesome UI
  */
 
 public class SearchFragment extends Fragment {
@@ -63,6 +51,13 @@ public class SearchFragment extends Fragment {
     private Button button, bangaloreButton, delhiButton, vegetarianButton, nonVegetarianButton;
     private final String[] array = {"Search by Category"};
 
+    /**
+     * default view populated by inflater
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
@@ -190,7 +185,9 @@ public class SearchFragment extends Fragment {
 
         return view;
     }
-
+    /**
+     * loads the items from the selected city or category
+     */
     private void myloadRecylerView() {
 
         recyclerViewSearch.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
@@ -224,7 +221,7 @@ public class SearchFragment extends Fragment {
                             editor.commit();
                             Snackbar.make(parentView, "Item added to cart", Snackbar.LENGTH_LONG).show();
                             //Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_LONG).show();
-                            Log.i("Ritu", item.getFood_name()+item.getFood_price());
+                            Log.i(TAG, item.getFood_name()+item.getFood_price());
                         }
                     });
 

@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by malik on 7/4/2017.
  * adapter to populate home screen with food items
+ * Can increase or decrease quantity ot items
  */
 
 public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHolder> {
@@ -25,7 +26,7 @@ public class FoodItemAdapter extends RecyclerView.Adapter<FoodItemAdapter.ViewHo
     private Context context;
     private final OnItemClickListener listener;
     /**
-     * parameterized constructor
+     * parameterized constructor  to access  adapter in other places
      */
     public FoodItemAdapter(List<FoodItem> foodItems, Context context, OnItemClickListener listener) {
     this.foodItems = foodItems;

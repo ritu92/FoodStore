@@ -2,6 +2,8 @@ package com.example.malik.foodstore.model;
 
 /**
  * Created by malik on 7/5/2017.
+ * model class for orders
+ * can specify id, name, quantity, price and order status of ordered item
  */
 
 public class Order {

@@ -2,6 +2,8 @@ package com.example.malik.foodstore.model;
 
 /**
  * Created by malik on 7/10/2017.
+ * model class for cart items
+ * name and price can be specified
  */
 
 public class CartList {

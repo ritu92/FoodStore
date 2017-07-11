@@ -37,6 +37,8 @@ import java.util.TimerTask;
 /**
  * Created by malik on 7/4/2017.
  * Home default display fragment
+ * Displays a rotating food picture layout with various food items on top
+ * Displays food items to order from
  */
 
 public class HomeFragment extends Fragment {

@@ -47,13 +47,14 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+
+ * This is the activity that shows us google maps on the screen
+ * There is a custom button added to the top of the frame to perform desired functionality
  * @see LatLng
  * @see Location
  * @see Marker
- * This is the activity that shows us google maps on the screen
- * There is a custom button added to the top of the frame to perform desired functionality
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, FragmentChangeListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     Button buttonBack;
     public String selectedLocAddress;
     public String addn;
@@ -65,9 +66,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
 
     /**
-     * Called when the activity is first created.
-     * @param savedInstanceState the instance state to create original view
      * Displays maps and a button
+     * Called when the maps activity is first created.
+     * @param savedInstanceState the instance state to create original view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +132,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * @see GoogleApiClient
      * build GoogleApi for use in the activity
+     * @see GoogleApiClient
      */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -178,7 +179,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+    /**
+     *  this method will be invoked asynchronously when the connect
+     * request has successfully completed.
+     * @param bundle gets location information passed from where it was called
+     */
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -193,18 +198,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * if connection got lost due to network connectivity
+     * we aren't performing any function in this case
+     * @param i input integer parameter
+     */
     @Override
     public void onConnectionSuspended(int i) {
 
     }
 
+    /**
+     * if connections fails, we can try reconnecting in some time or do nothing
+     * here we do nothing
+     * @param connectionResult
+     */
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
+    /**
+     * checks if user has granted access to location services
+     * checks for access to fine location permissions
+     * @return if location permission enabled then use location services
+     * if disabled, then can't perform any location service based actions
+     */
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -236,6 +257,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * checks for location permission results
+     * @param requestCode multiple types of request permissions, different codes
+     * @param permissions fine location permissions
+     * @param grantResults results of permission
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -267,16 +294,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    @Override
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.map,fragment,fragment.toString());
-        fragmentTransaction.addToBackStack(fragment.toString());
-        fragmentTransaction.commit();
-    }
-
+    /**
+     * reverse geocoding of latitude longitude, google gives actual address
+     * done using async task on separate thread so that main activity doesn't get overloaded
+     */
     private class ReverseGeocodingTask extends AsyncTask<LatLng, Void, String> {
         Context mContext;
 
@@ -286,6 +307,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Finding address using reverse geocoding
+
+        /**
+         * separate thread task which does lat long to address geocoding
+         * @param params lat long location coodinates
+         *               continuously updated therefore array
+         * @return returns the readable address corresponding to lat longs
+         */
         @Override
         protected String doInBackground(LatLng... params) {
             Geocoder geocoder = new Geocoder(mContext);
@@ -317,7 +345,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.i("Ritu", selectedLocAddress+"ritu");
             return addressText;
         }
-
+/**
+ * once we get readable address, we need to update it on a marker
+ * @param addressText the address text response from reverse geocoding that we set to the marker
+ */
         @Override
         protected void onPostExecute(String addressText) {
             // Setting the title for the marker.

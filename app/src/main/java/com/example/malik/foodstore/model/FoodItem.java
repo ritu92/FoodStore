@@ -2,6 +2,8 @@ package com.example.malik.foodstore.model;
 
 /**
  * Created by malik on 7/4/2017.
+ * model class for food items
+ * name, price, category and image of food can be specified
  */
 
 public class FoodItem {

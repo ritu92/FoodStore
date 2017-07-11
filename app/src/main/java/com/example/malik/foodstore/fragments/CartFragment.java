@@ -64,7 +64,12 @@ import java.util.Calendar;
 
 /**
  * Created by malik on 7/4/2017.
- * by default view for cart fragment
+ * populates view for cart fragment\
+ * enables on click listener on items
+ * enables android pay wallet payment
+ * enables button to get current location via maps activity
+ * @see GoogleApiClient
+ * @see MaskedWallet
  */
 
 public class CartFragment extends Fragment implements
@@ -84,6 +89,16 @@ public class CartFragment extends Fragment implements
     RecyclerView.Adapter adapter;
     ArrayList<CartList> ar = new ArrayList<>();
 
+    /**
+     * view inflator for the cart
+     * gets items selected from other fragments to be put in cart via shared preferences
+     * gets current address from google maps activity
+     * @see SharedPreferences
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view for the fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cart_fragment, container, false);
@@ -106,6 +121,10 @@ public class CartFragment extends Fragment implements
 
         adapter = new CartAdapter(ar, getActivity().getApplicationContext());
         recyclerViewCart.setAdapter(adapter);
+        /**
+         * displays current address received from google maps activity
+         * if we don't want to enter manual address
+         */
         et_Address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +132,9 @@ public class CartFragment extends Fragment implements
                 et_Address.setText(address);
             }
         });
-
+/**
+ * takes us to the maps activity to fetch the current address
+ */
         bt_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +149,9 @@ public class CartFragment extends Fragment implements
                 requestFullWallet(v);
             }
         });
+        /**
+         * places the order of cart items if you want cash on delivery so no payment has to be made
+         */
         buttonCash.setOnClickListener(new View.OnClickListener() {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -135,14 +159,15 @@ public class CartFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 Log.i("Ritu", formattedDate);
-                String ORDER_URL = "http://rjtmobile.com/ansari/fos/fosapp/order_request.php?&order_category=veg&order_name="+name+"&order_quantity=1&total_order="+price+"&order_delivery_add=noida&order_date="+formattedDate+"&user_phone=12345";
+                Log.i("Ritu", name+" "+price);
+                String ORDER_URL = "http://rjtmobile.com/ansari/fos/fosapp/order_request.php?&order_category=veg&order_name="+name+"&order_quantity=1&total_order="+price+"&order_delivery_add=noida&order_date="+formattedDate+"&user_phone=55565454";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, ORDER_URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
 
-                                if (response.contains("OrderId")) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Order placed for num:" , Toast.LENGTH_LONG).show();
+                                if (response.contains("order confirmed")) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Order placed for num:55565454" , Toast.LENGTH_LONG).show();
 
 
                                 } else
@@ -160,7 +185,7 @@ public class CartFragment extends Fragment implements
 
             }
         });
-        // 3 bags 1000 dollars
+        // 3 food items 1000 rupees
         generateMaskedWalletRequest(3, 1000);
 
         // Wallet fragment style
@@ -184,7 +209,7 @@ public class CartFragment extends Fragment implements
                 WalletFragmentInitParams.newBuilder()
                         .setMaskedWalletRequest(generateMaskedWalletRequest(2, 300))
                         .setMaskedWalletRequestCode(MASKED_WALLET_REQUEST_CODE)
-                        .setAccountName("Google I/O Codelab");
+                        .setAccountName("Hotel Tajmahal");
         mWalletFragment.initialize(startParamsBuilder.build());
 
         // Add the WalletFragment to the UI
@@ -204,36 +229,51 @@ public class CartFragment extends Fragment implements
 
         return view;
     }
+
+    /**
+     * masked request for android pay to crate instance of available wallet for payment
+     * @param quantity custom parameter for quantity of one item
+     * @param price price of one item
+     * @return request instance response
+     */
+
     private MaskedWalletRequest generateMaskedWalletRequest(int quantity, int price) {
         MaskedWalletRequest maskedWalletRequest =
                 MaskedWalletRequest.newBuilder()
-                        .setMerchantName("Google I/O Codelab")
+                        .setMerchantName("Hotel Tajmahal")
                         .setPhoneNumberRequired(true)
                         .setShippingAddressRequired(true)
-                        .setCurrencyCode("USD")
+                        .setCurrencyCode("Rupee")
                         .setCart(Cart.newBuilder()
-                                .setCurrencyCode("USD")
-                                .setTotalPrice("10.00")   // all items cart total
+                                .setCurrencyCode("Rupee")
+                                .setTotalPrice("333.00")   // all items cart total
                                 .addLineItem(LineItem.newBuilder()
-                                        .setCurrencyCode("USD")
-                                        .setDescription("Google I/O Sticker")
+                                        .setCurrencyCode("Rupee")
+                                        .setDescription("Matar paneer")
                                         .setQuantity(quantity + "")
                                         .setUnitPrice(price + "")
-                                        .setTotalPrice("10.00")  // 1st items all quantity total
+                                        .setTotalPrice("400")  // 1st items all quantity total
                                         .build())
                                 .addLineItem(LineItem.newBuilder()
-                                        .setCurrencyCode("USD")
-                                        .setDescription("Google I/O Sticker")
+                                        .setCurrencyCode("Rupee")
+                                        .setDescription("")
                                         .setQuantity(quantity + "")
                                         .setUnitPrice(price + "")
-                                        .setTotalPrice("10.00")  // 2nd item all quantity total
+                                        .setTotalPrice("300")  // 2nd item all quantity total
                                         .build())
                                 .build())
-                        .setEstimatedTotalPrice("15.00")       // all items cart total with tax
+                        .setEstimatedTotalPrice("1000")       // all items cart total with tax
                         .build();
         return maskedWalletRequest;
     }
 
+    /**
+     * cases for both masked wallet result and full wallet result received by activity
+     * various actions we will take according to response received stated here
+     * @param requestCode
+     * @param resultCode
+     * @param data returned by intent service
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -277,6 +317,11 @@ public class CartFragment extends Fragment implements
         }
     }
 
+    /**
+     * makes a request for instance of full wallet
+     * @param googleTransactionId for later reference to print details of our transaction
+     * @return full wallet instance response
+     */
     private FullWalletRequest generateFullWalletRequest(String googleTransactionId) {
         FullWalletRequest fullWalletRequest = FullWalletRequest.newBuilder()
                 .setGoogleTransactionId(googleTransactionId)
@@ -301,18 +346,28 @@ public class CartFragment extends Fragment implements
         return fullWalletRequest;
     }
 
+    /**
+     * starting service on stat to save battery
+     */
     @Override
     public void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
     }
 
+    /**
+     * stopping service when not required
+     */
     @Override
     public void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
     }
 
+    /**
+     * Google Api connection status
+     * @param bundle
+     */
     @Override
     public void onConnected(Bundle bundle) {
         // GoogleApiClient is connected, we don't need to do anything here
@@ -328,6 +383,11 @@ public class CartFragment extends Fragment implements
         // GoogleApiClient failed to connect, we should log the error and retry
     }
 
+    /**
+     * if appropriate wallet instance response not found then let user know
+     * otherwise compare instances of masked wallet and full wallet to make final payment
+     * @param view
+     */
     public void requestFullWallet(View view) {
         if (mMaskedWallet == null) {
                     Toast.makeText(getActivity(), "No masked wallet, can't confirm", Toast.LENGTH_SHORT).show();
@@ -339,7 +399,12 @@ public class CartFragment extends Fragment implements
                 FULL_WALLET_REQUEST_CODE);
     }
 
-
+    /**
+     * transaction status notification
+     * @param googleTransactionId Id for later reference
+     * @param status status of payment
+     * @return notification of transaction details
+     */
     public static NotifyTransactionStatusRequest generateNotifyTransactionStatusRequest(
             String googleTransactionId, int status) {
         return NotifyTransactionStatusRequest.newBuilder()

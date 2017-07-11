@@ -44,6 +44,14 @@ public class OrdersFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<Order> order;
+
+    /**
+     * populates fragment view with inflater
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return current default view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view = inflater.inflate(R.layout.orders_fragment,container,false);
@@ -55,6 +63,9 @@ public class OrdersFragment extends Fragment {
         //custom layout for recycler view
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         order = new ArrayList<>();
+        /**
+         * displays earlier orders placed for that mobile number
+         */
         bt_trackOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +78,9 @@ public class OrdersFragment extends Fragment {
         return view;
     }
 
+    /**
+     * populates the recycler view with previous orders using volley request
+     */
     private void myloadRecylerView() {
         Log.i(TAG,"myloadRecyclerView");
         StringRequest sr = new StringRequest(Request.Method.GET, url_final, new Response.Listener<String>() {

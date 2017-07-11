@@ -48,15 +48,31 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
 
-
+    /**
+     * indicates the circle corresponding to the context
+     * whose picture is currently getting displayed
+     * @param context
+     */
     public CirclePageIndicator(Context context) {
         this(context, null);
     }
 
+    /**
+     *  highlights the circle corresponding to the context
+     * whose picture is currently getting displayed
+     * @param context
+     * @param attrs
+     */
     public CirclePageIndicator(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
     }
 
+    /**
+     * displays selected pictures in the view that keep changing after defined time
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
     public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (isInEditMode()) return;
@@ -126,6 +142,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mPaintFill.getColor();
     }
 
+    /**
+     * specifies which orientation we want the view to be displayed in
+     * this is a custom imported library so it only works for one orientation at a time
+     * @param orientation
+     */
     public void setOrientation(int orientation) {
         switch (orientation) {
             case HORIZONTAL:
@@ -179,6 +200,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mSnap;
     }
 
+    /**
+     * keeps track of the count of circle which is currently being populated
+     * populates the view with pictures
+     * decides time for each picture to stay
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -263,6 +290,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
 
+    /**
+     * sets click slide functionality on the view so we can manually change the picture before set time
+     * @param ev
+     * @return
+     */
     public boolean onTouchEvent(android.view.MotionEvent ev) {
         if (super.onTouchEvent(ev)) {
             return true;

@@ -13,7 +13,6 @@ import com.example.malik.foodstore.R;
 import java.util.ArrayList;
 
 /**
- * Created by Raul on 7/4/2017.
  * adapter to display images in sliding view on home screen
  */
 
